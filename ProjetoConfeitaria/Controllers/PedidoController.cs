@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoConfeitaria.DTOs;
 using ProjetoConfeitaria.Services;
@@ -40,6 +41,7 @@ public class PedidoController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> AddPedido([FromBody] PedidoDTO pedidoDto)
     {
         if (!ModelState.IsValid)
@@ -50,6 +52,7 @@ public class PedidoController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> AtualizarPedido(int id, [FromBody] PedidoDTO pedidoDto)
     {
         if (!ModelState.IsValid)
@@ -63,6 +66,7 @@ public class PedidoController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeletarPedido(int id)
     {
         await _pedidoService.Deletar(id);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoConfeitaria.DTOs;
 using ProjetoConfeitaria.Models;
@@ -35,6 +36,7 @@ public class CategoriaController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Criar([FromBody] CategoriaDTO categoriaDto)
     {
         if (!ModelState.IsValid)
@@ -45,6 +47,7 @@ public class CategoriaController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> Atualizar(int id, [FromBody] CategoriaDTO categoriaDto)
     {
         if (!ModelState.IsValid)
@@ -58,6 +61,7 @@ public class CategoriaController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> Deletar(int id)
     {
         await _categoriaService.Deletar(id);

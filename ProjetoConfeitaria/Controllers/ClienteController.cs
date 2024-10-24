@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoConfeitaria.DTOs;
 using ProjetoConfeitaria.Models;
@@ -33,6 +34,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> AddCliente([FromBody] ClienteDTO clienteDto)
     {
         if (!ModelState.IsValid)
@@ -43,6 +45,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> AtualizarCliente(int id, [FromBody] ClienteDTO clienteDto)
     {
         if (!ModelState.IsValid)
@@ -56,6 +59,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeletarCliente(int id)
     {
         await _clienteService.Deletar(id);
