@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ProjetoConfeitaria.DTOs;
 
@@ -15,6 +16,7 @@ public class ProdutoDTO
     [Required(ErrorMessage = "O preço é obrigatório.")]
     public decimal Preco { get; set; }
     public bool Disponivel { get; set; }
-    public string? CategoriaNome { get; set; }
+    //[JsonIgnore]
+    public int CategoriaId { get; set; }
 }
 
