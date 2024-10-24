@@ -4,44 +4,13 @@ using ProjetoConfeitaria.Models;
 
 namespace ProjetoConfeitaria.Repositories;
 
-public class PedidoRepository : IPedidoRepository
+public class PedidoRepository : Repository<Pedido>, IPedidoRepository
 {
-    private readonly AppDbContext _context;
+    public PedidoRepository(AppDbContext context) : base(context) { }
 
-    public PedidoRepository(AppDbContext context)
+    // Método específico para buscar pedidos por status
+    public async Task<IEnumerable<Pedido>> GetPedidosPorStatusAsync(string status)
     {
-        _context = context;
-    }
-
-    public async Task<IEnumerable<Pedido>> BuscarTodos()
-    {
-        return await _context.Pedidos.Include(p => p.Cliente).Include(p => p.ItensPedido).ThenInclude(i => i.Produto).ToListAsync();
-    }
-
-    public async Task<Pedido> BuscarPorId(int id)
-    {
-        return await _context.Pedidos.Include(p => p.Cliente).Include(p => p.ItensPedido).ThenInclude(i => i.Produto).Where(p => p.Id == id).FirstOrDefaultAsync();
-    }
-
-    public async Task<Pedido> Criar(Pedido pedido)
-    {
-        _context.Pedidos.Add(pedido);
-        await _context.SaveChangesAsync();
-        return pedido;
-    }
-
-    public async Task<Pedido> Atualizar(Pedido pedido)
-    {
-        _context.Entry(pedido).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
-        return pedido;
-    }
-
-    public async Task<Pedido> Deletar(int id)
-    {
-        var pedido = await BuscarPorId(id);
-        _context.Pedidos.Remove(pedido);
-        await _context.SaveChangesAsync();
-        return pedido;
+        return await _dbSet.Where(p => p.Status == status).ToListAsync();
     }
 }

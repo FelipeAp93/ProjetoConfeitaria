@@ -2,12 +2,8 @@
 
 namespace ProjetoConfeitaria.Repositories;
 
-public interface IPedidoRepository
+public interface IPedidoRepository : IRepository<Pedido>
 {
-    Task<IEnumerable<Pedido>> BuscarTodos();
-    Task<Pedido> BuscarPorId(int id);
-    Task<Pedido> Criar(Pedido pedido);
-    Task<Pedido> Atualizar(Pedido pedido);
-    Task<Pedido> Deletar(int id);
+    Task<IEnumerable<Pedido>> GetPedidosPorStatusAsync(string status);
 }
 
